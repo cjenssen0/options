@@ -220,7 +220,12 @@ class GridWorld:
 		# Basically I get what will be the next state and before really making
 		# it my current state I verify everything is sound (it is terminal only
 		# if we are not using eigenpurposes).
-		if (self.rewardFunction ==None).any() == True and self.isTerminal():
+		if self.rewardFunction is None:
+			cond = self.rewardFunction == None
+		else:
+			cond = (self.rewardFunction == None).any()
+		
+		if cond == True and self.isTerminal():
 			return 0
 		else:
 			nextX, nextY = self._getNextState(action)
@@ -269,7 +274,11 @@ class GridWorld:
 	def getAdjacencyMatrix(self):
 		''' If I never did it before, I will fill the adjacency matrix.
 		Otherwise I'll just return the one that was filled before.'''
-		if self.adjMatrix == None:
+		if self.adjMatrix is None:
+			cond = self.adjMatrix
+		else:
+			cond = (self.adjMatrix == None).any()		
+		if cond == None:
 			self._fillAdjacencyMatrix()
 
 		return self.adjMatrix
