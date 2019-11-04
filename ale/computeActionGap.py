@@ -77,7 +77,7 @@ for trj in xrange(0, 1):
     extrinsicReward = 0
     eigenpurposeIdx = 1023 - i
     optionIdx = eigenpurposeIdx
-    print 'Learning option ', eigenpurposeIdx
+    print('Learning option ', eigenpurposeIdx)
 
     for a in xrange(len(randomStart)):
         extrinsicReward += ale.act(randomStart[a]);

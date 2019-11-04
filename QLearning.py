@@ -36,8 +36,8 @@ class QLearning:
 
 		if self.toLearnUsingOnlyPrimitiveActions:
 			if self.epsilon != 1.0:
-				print 'Something will go wrong. Epsilon should be 1.0 when \
-				using the options only for exploration in QLearning.'
+				print('Something will go wrong. Epsilon should be 1.0 when \
+				using the options only for exploration in QLearning.')
 			self.Q = np.zeros((self.numStates, self.numPrimitiveActions))
 		else:
 			self.Q = np.zeros((self.numStates, len(self.actionSet)))

@@ -19,8 +19,8 @@ class Utils:
 		numCols = len(M[0])
 		expM = np.zeros((numRows, numCols))
 
-		for i in xrange(numRows):
-			for j in xrange(numCols):
+		for i in range(numRows):
+			for j in range(numCols):
 				if M[i][j] != 0:
 					expM[i][j] = M[i][j]**exp
 
@@ -47,8 +47,8 @@ class Utils:
 		numCols = int(data[0].split(',')[1])
 		matrixMDP = np.zeros((numRows, numCols), dtype = np.int)
 
-		for i in xrange(len(data) - 1):
-			for j in xrange(len(data[i+1])):
+		for i in range(len(data) - 1):
+			for j in range(len(data[i+1])):
 				if data[i+1][j] == 'X':
 					matrixMDP[i][j] = 4 #terminate
 				elif data[i+1][j] == 'T':
@@ -64,8 +64,8 @@ class Utils:
 
 
 		option = []
-		for i in xrange(numRows):
-			for j in xrange(numCols):
+		for i in range(numRows):
+			for j in range(numCols):
 				option.append(matrixMDP[i][j])
 
 		return option

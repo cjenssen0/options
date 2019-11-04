@@ -33,7 +33,7 @@ class Learning:
 	def _evalPolicy(self):
 		''' Policy evaluation step.'''
 		delta = 0.0
-		for s in xrange(self.numStates):
+		for s in range(self.numStates):
 			v = self.V[s]
 			nextS, nextR = self.environment.getNextStateAndReward(
 				s, self.actionSet[self.pi[s]])
@@ -46,11 +46,11 @@ class Learning:
 	def _improvePolicy(self):
 		''' Policy improvement step. '''
 		policy_stable = True
-		for s in xrange(self.numStates):
+		for s in range(self.numStates):
 			old_action = self.pi[s]
 			tempV = [0.0] * len(self.actionSet)
 			# I first get all value-function estimates
-			for i in xrange(len(self.actionSet)):
+			for i in range(len(self.actionSet)):
 				nextS, nextR = self.environment.getNextStateAndReward(
 					s, self.actionSet[i])
 				tempV[i] = nextR + self.gamma * self.V[nextS]
@@ -95,10 +95,10 @@ class Learning:
 		delta = 1
 		while delta > theta:
 			delta = 0
-			for s in xrange(self.numStates - 1):
+			for s in range(self.numStates - 1):
 				v = self.V[s]
 				tempSum = 0
-				for a in xrange(len(pi[s])):
+				for a in range(len(pi[s])):
 					nextS, nextR = self.environment.getNextStateAndReward(
 						s, self.actionSet[a])
 					tempSum += pi[s][a] * 1.0 * (
@@ -108,12 +108,12 @@ class Learning:
 				delta = max(delta, math.fabs(v - self.V[s]))
 
 			if iteration %1000 == 0:
-				print 'Iteration:', iteration, '\tDelta:', delta
+				print('Iteration:', iteration, '\tDelta:', delta)
 			iteration += 1
 
 		'''
 		import sys
-		for i in xrange(16):
+		for i in range(16):
 			sys.stdout.write(str(self.V[i]) + ' ')
 			if (i + 1) % 4 == 0:
 				print
@@ -135,9 +135,9 @@ class Learning:
 		# V[s] = \sum \pi(a|s) 1.0 [r + \gamma V[s']] (assuming determinism)
 		# - \sum \pi(a|s) r = -V[s] + \sum \pi(a|s) \gamma V[s']
 		'''
-		for s in xrange(self.numStates - 1):
+		for s in range(self.numStates - 1):
 			a_equations[s][s] = -1
-			for a in xrange(len(pi[s])):
+			for a in range(len(pi[s])):
 				nextS = -1
 				nextR = -1
 
@@ -153,9 +153,9 @@ class Learning:
 				a_equations[s][nextS] += pi[s][a] * self.gamma
 				b_equations[s] -= pi[s][a] * nextR
 
-		for i in xrange(self.numStates):
+		for i in range(self.numStates):
 			hasOnlyZeros = True
-			for j in xrange(self.numStates):
+			for j in range(self.numStates):
 				if a_equations[i][j] != 0.0:
 					hasOnlyZeros = False
 

@@ -30,11 +30,11 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 	D = np.zeros((numStates, numStates))
 
 	# Obtaining the Valency Matrix
-	for i in xrange(numStates):
-		for j in xrange(numStates):
+	for i in range(numStates):
+		for j in range(numStates):
 			D[i][i] = np.sum(W[i])
 	# Making sure our final matrix will be full rank
-	for i in xrange(numStates):
+	for i in range(numStates):
 	   if D[i][i] == 0.0:
 	       D[i][i] = 1.0
 
@@ -59,7 +59,7 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 		oldEigenvectors = eigenvectors.T
 		eigenvalues = []
 		eigenvectors = []
-		for i in xrange(len(oldEigenvectors)):
+		for i in range(len(oldEigenvectors)):
 			eigenvalues.append(oldEigenvalues[i])
 			eigenvalues.append(oldEigenvalues[i])
 			eigenvectors.append(oldEigenvectors[i])
@@ -76,10 +76,10 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 	# Now I will define a reward function and solve the MDP for it
 	# I iterate over the columns, not rows. I can index by 0 here.
 	guard = len(eigenvectors[0])
-	for i in xrange(guard):
+	for i in range(guard):
 		idx = guard - i - 1
 		if verbose:
-			print 'Solving for eigenvector #' + str(idx)
+			print('Solving for eigenvector #' + str(idx))
 		polIter = Learning(0.9, env, augmentActionSet=True)
 		env.defineRewardFunction(eigenvectors[:,idx])
 		V, pi = polIter.solvePolicyIteration()
@@ -87,7 +87,7 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 		# Now I will eliminate any actions that may give us a small improvement.
 		# This is where the epsilon parameter is important. If it is not set all
 		# it will never be considered, since I set it to a very small value
-		for j in xrange(len(V)):
+		for j in range(len(V)):
 			if V[j] < epsilon:
 				pi[j] = len(env.getActionSet())
 
@@ -119,11 +119,11 @@ def policyEvaluation(env):
 	bellman = Learning(1, env, augmentActionSet=False)
 	expectation = bellman.solveBellmanEquations(pi, actionSet, None)
 
-	for i in xrange(len(expectation) - 1):
+	for i in range(len(expectation) - 1):
 		sys.stdout.write(str(expectation[i]) + '\t')
 		if (i + 1) % env.numCols == 0:
-			print
-	print
+			print()
+	print()
 
 def policyIteration(env):
 	''' Simple test for policy iteration '''
@@ -148,14 +148,14 @@ def optionDiscoveryThroughPVFs(env, epsilon, verbose, discoverNegation):
 	# I convert the np.array of options into a list and print it.
 	# This is useful if one wants to use this data in a different script.
 	if verbose:
-		print
-		print 'Information about discovered options:'
-		for i in xrange(len(options)):
+		print()
+		print('Information about discovered options:')
+		for i in range(len(options)):
 			options[i] = options[i].tolist()
-		print 'numRows = ', env.getGridDimensions()[0]
-		print 'numCols = ', env.getGridDimensions()[1]
-		print 'env = ', env.matrixMDP.flatten().tolist()
-		print 'options = ', options
+		print('numRows = ', env.getGridDimensions()[0])
+		print('numCols = ', env.getGridDimensions()[1])
+		print('env = ', env.matrixMDP.flatten().tolist())
+		print('options = ', options)
 
 def getExpectedNumberOfStepsFromOption(env, eps, verbose,
 	discoverNegation, loadedOptions=None):
@@ -175,13 +175,13 @@ def getExpectedNumberOfStepsFromOption(env, eps, verbose,
 	else:
 		options = loadedOptions
 		actionSetPerOption = []
-		for i in xrange(len(loadedOptions)):
+		for i in range(len(loadedOptions)):
 			tempActionSet = env.getActionSet()
 			tempActionSet.append('terminate')
 			actionSetPerOption.append(tempActionSet)
 
 	# Now I add all options to my action set. Later we decide which ones to use.
-	for i in xrange(len(options)):
+	for i in range(len(options)):
 		actionSet.append(options[i])
 
 	if loadedOptions == None:
@@ -193,25 +193,25 @@ def getExpectedNumberOfStepsFromOption(env, eps, verbose,
 		numOptions = len(loadedOptions)
 
 	if discoverNegation:
-		for i in xrange(numOptions/2):
+		for i in range(numOptions/2):
 			listToPrint = stats.getAvgNumStepsBetweenEveryPoint(actionSet,
 				actionSetPerOption, verbose, initOption=i*2,
 				numOptionsToConsider=2)
 			myFormattedList = [ '%.2f' % elem for elem in listToPrint ]
-			print 'Random, Option ' + str(i + 1) + ': ' + str(myFormattedList)
+			print('Random, Option ' + str(i + 1) + ': ' + str(myFormattedList))
 	else:
-		for i in xrange(numOptions):
+		for i in range(numOptions):
 			listToPrint = stats.getAvgNumStepsBetweenEveryPoint(actionSet,
 				actionSetPerOption, verbose, initOption=i,
 				numOptionsToConsider=1)
 			myFormattedList = [ '%.2f' % elem for elem in listToPrint ]
-			print 'Random, Option ' + str(i + 1) + ': ' + str(myFormattedList)
+			print('Random, Option ' + str(i + 1) + ': ' + str(myFormattedList))
 
 	listToPrint = stats.getAvgNumStepsBetweenEveryPoint(actionSet,
 		actionSetPerOption, verbose, initOption=0,
 		numOptionsToConsider=numOptions)
 	myFormattedList = [ '%.2f' % elem for elem in listToPrint ]
-	print myFormattedList
+	print(myFormattedList)
 
 def qLearningWithOptions(env, alpha, gamma, options_eps, epsilon,
 	nSeeds, maxLengthEp, nEpisodes, verbose, useNegation,
@@ -234,7 +234,7 @@ def qLearningWithOptions(env, alpha, gamma, options_eps, epsilon,
 		options = loadedOptions
 		actionSetPerOption = []
 
-		for i in xrange(len(loadedOptions)):
+		for i in range(len(loadedOptions)):
 			tempActionSet = env.getActionSet()
 			tempActionSet.append('terminate')
 			actionSetPerOption.append(tempActionSet)
@@ -259,17 +259,17 @@ def qLearningWithOptions(env, alpha, gamma, options_eps, epsilon,
 		returns_learn.append([])
 
 		if verbose:
-			print 'Using', numOptionsToUse, 'options'
+			print('Using', numOptionsToUse, 'options')
 
-		for s in xrange(numSeeds):
+		for s in range(numSeeds):
 			if verbose:
-				print 'Seed: ', s + 1
+				print('Seed: ', s + 1)
 
 			returns_eval[idx].append([])
 			returns_learn[idx].append([])
 			actionSet = env.getActionSet()
 
-			for i in xrange(numOptionsToUse):
+			for i in range(numOptionsToUse):
 				actionSet.append(options[i])
 
 			if useNegation and loadedOptions == None:
@@ -281,17 +281,17 @@ def qLearningWithOptions(env, alpha, gamma, options_eps, epsilon,
 				environment=env, seed=s, useOnlyPrimActions=True,
 				actionSet=actionSet, actionSetPerOption=actionSetPerOption)
 
-			for i in xrange(numEpisodes):
+			for i in range(numEpisodes):
 				returns_learn[idx][s].append(learner.learnOneEpisode(timestepLimit=maxLengthEp))
 				returns_eval[idx][s].append(learner.evaluateOneEpisode(eps=0.01, timestepLimit=maxLengthEp))
 
 	returns_learn_primitive = []
 	returns_eval_primitive  = []
-	for s in xrange(numSeeds):
+	for s in range(numSeeds):
 		returns_learn_primitive.append([])
 		returns_eval_primitive.append([])
 		learner = QLearning(alpha=alpha, gamma=gamma, epsilon=epsilon, environment=env, seed=s)
-		for i in xrange(numEpisodes):
+		for i in range(numEpisodes):
 			returns_learn_primitive[s].append(learner.learnOneEpisode(timestepLimit=maxLengthEp))
 			returns_eval_primitive[s].append(learner.evaluateOneEpisode(eps=0.01, timestepLimit=maxLengthEp))
 
@@ -304,10 +304,12 @@ if __name__ == "__main__":
 	args = ArgsParser.readInputArgs()
 
 	taskToPerform = args.task
+	taskToPerform = 4
 	epsilon = args.epsilon
 	verbose = args.verbose
 	inputMDP = args.input
 	outputPath = args.output
+	outputPath = '/home/cjei/Apps/graphs/'
 	optionsToLoad = args.load
 	bothDirections = args.both
 	num_seeds = args.num_seeds
@@ -326,7 +328,7 @@ if __name__ == "__main__":
 	loadedOptions = None
 	if optionsToLoad != None:
 		loadedOptions = []
-		for i in xrange(len(optionsToLoad)):
+		for i in range(len(optionsToLoad)):
 			loadedOptions.append(Utils.loadOption(optionsToLoad[i]))
 			plot = Plotter(outputPath, env)
 			plot.plotPolicy(loadedOptions[i], str(i+1) + '_')
@@ -353,7 +355,7 @@ if __name__ == "__main__":
 		returns_learn = []
 		returns_eval  = []
 		learner = QLearning(alpha=0.1, gamma=0.9, epsilon=1.00, environment=env)
-		for i in xrange(num_episodes):
+		for i in range(num_episodes):
 			returns_learn.append(learner.learnOneEpisode(timestepLimit=max_length_episode))
 			returns_eval.append(learner.evaluateOneEpisode(eps=0.01, timestepLimit=max_length_episode))
 
@@ -374,7 +376,7 @@ if __name__ == "__main__":
 		minConfInt, maxConfInt = Utils.computeConfInterval(average, std_dev, num_seeds)
 
 		plt.plot(Utils.movingAverage(average), label='Prim. act.', color=Utils.colors[color_idx])
-		plt.fill_between(xrange(len(Utils.movingAverage(average))),
+		plt.fill_between(range(len(Utils.movingAverage(average))),
 			Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
 			alpha=0.5, color=Utils.colors[color_idx])
 
@@ -391,7 +393,7 @@ if __name__ == "__main__":
 				plt.plot(Utils.movingAverage(average),
 					label=str(numOptionsToUse) + ' opt.', color=Utils.colors[color_idx])
 
-			plt.fill_between(xrange(len(Utils.movingAverage(average))),
+			plt.fill_between(range(len(Utils.movingAverage(average))),
 				Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
 				alpha=0.5, color=Utils.colors[color_idx])
 
@@ -424,7 +426,7 @@ if __name__ == "__main__":
 		minConfInt, maxConfInt = Utils.computeConfInterval(average, std_dev, num_seeds)
 
 		plt.plot(Utils.movingAverage(average), label='Prim. act.', color=Utils.colors[color_idx])
-		plt.fill_between(xrange(len(Utils.movingAverage(average))),
+		plt.fill_between(range(len(Utils.movingAverage(average))),
 			Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
 			alpha=0.5, color=Utils.colors[color_idx])
 
@@ -438,7 +440,7 @@ if __name__ == "__main__":
 				plt.plot(Utils.movingAverage(average),
 					label=str(numOptionsToUse) + ' opt. disc.', color=Utils.colors[color_idx])
 
-				plt.fill_between(xrange(len(Utils.movingAverage(average))),
+				plt.fill_between(range(len(Utils.movingAverage(average))),
 					Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
 					alpha=0.5, color=Utils.colors[color_idx])
 
@@ -452,7 +454,7 @@ if __name__ == "__main__":
 				plt.plot(Utils.movingAverage(average),
 					label=str(numOptionsToUse) + ' opt. loaded', color=Utils.colors[color_idx])
 
-				plt.fill_between(xrange(len(Utils.movingAverage(average))),
+				plt.fill_between(range(len(Utils.movingAverage(average))),
 					Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
 					alpha=0.5, color=Utils.colors[color_idx])
 
