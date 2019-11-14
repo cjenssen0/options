@@ -51,6 +51,14 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 	eigenvalues = eigenvalues[idx]
 	eigenvectors = eigenvectors[:,idx]
 
+	#-- calculate Information potential Ip
+	v_sum = np.dot(eigenvectors.T, np.ones_like(eigenvalues))
+	Ip = (np.sqrt(np.abs(eigenvalues))*v_sum)**2
+	idx = np.flip(np.argsort(Ip))
+	# re-calculate lambda and v based on Ip
+	eigenvalues = eigenvalues[idx]
+	eigenvectors = eigenvectors[:,idx]
+
 	# If I decide to use both directions of the eigenvector, I do it here.
 	# It is easier to just change the list eigenvector, even though it may
 	# not be the most efficient solution. The rest of the code remains the same.
@@ -304,7 +312,7 @@ if __name__ == "__main__":
 	args = ArgsParser.readInputArgs()
 
 	taskToPerform = args.task
-	taskToPerform = 4
+	#taskToPerform = 1
 	epsilon = args.epsilon
 	verbose = args.verbose
 	inputMDP = args.input
