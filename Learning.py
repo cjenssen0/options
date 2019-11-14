@@ -142,7 +142,7 @@ class Learning:
 				nextR = -1
 
 				#If it is a primitive action
-				if isinstance(fullActionSet[a], basestring):
+				if isinstance(fullActionSet[a], str):
 					nextS, nextR = self.environment.getNextStateAndReward(
 						s, fullActionSet[a])
 				else: #if it is an option

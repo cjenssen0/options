@@ -44,7 +44,7 @@ class QLearning:
 
 	def getAvailableActionSet(self, s):
 		availActions = []
-		for i in xrange(len(self.actionSet)):
+		for i in range(len(self.actionSet)):
 			if i < self.numPrimitiveActions:
 				availActions.append(i)
 			elif self.getPrimitiveAction(s, i) != 'terminate':
@@ -53,7 +53,7 @@ class QLearning:
 		return availActions
 
 	def getIdFromPrimitiveActions(self, action):
-		for i in xrange(self.numPrimitiveActions):
+		for i in range(self.numPrimitiveActions):
 			if self.env.getActionSet()[i] == action:
 				return i
 
