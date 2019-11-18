@@ -102,7 +102,7 @@ class ArgsParser:
 			'7: Solve for a given goal w/ primitive actions (q-learning)' +
 			' following discovered AND loaded options This one is for comparison.')
 
-		parser.add_argument('-i', '--input', type = str, default = 'mdps/toy.mdp',
+		parser.add_argument('-i', '--input', type = str, default = 'mdps/4rooms.mdp',
 			help='File containing the MDP definition (default: mdps/toy.mdp).')
 
 		parser.add_argument('-o', '--output', type = str, default = 'graphs/',
