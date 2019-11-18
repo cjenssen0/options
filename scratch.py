@@ -65,6 +65,27 @@ for ax in axs.flat:
     ax.label_outer()
 plt.show()
 
+#--
+#plt.stem(eigenvectors.sum(0))
+#plt.imshow(eigenvectors[:, -1].reshape(13, 13))
+plt.figure(1)
+for i in range(64):
+    plt.subplot(8, 8, i+1)
+    plt.plot(eigenvectors[:, -i])	
+    plt.title(i)
+
+plt.figure(3)
+for i in range(64):
+    plt.subplot(8, 8, i+1)
+    plt.plot(eigenvectors[:, i])	
+    plt.title(i)
+
+#plt.figure(2)
+#plt.stem(eigenvectors.sum(0))
+#plt.show()
+#raise
+#--
+
 
 #---------------
 eigenvalues, eigenvectors = np.linalg.eigh(normalizedL)
