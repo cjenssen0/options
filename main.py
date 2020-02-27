@@ -407,7 +407,7 @@ if __name__ == "__main__":
 				Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
 				alpha=0.5, color=Utils.colors[color_idx])
 
-		plt.legend(loc='upper left', prop={'size':10}, bbox_to_anchor=(1,1))
+		plt.legend(loc='upper left', prop={'size':20}, bbox_to_anchor=(1,1))
 		plt.tight_layout(pad=7)
 		plt.show()
 
