@@ -13,7 +13,7 @@ from matplotlib import cm
 
 class Plotter:
 	env = None
-	outputPath = '/home/cjei/Apps/graphs/'
+	outputPath = './graphs/'
 	numRows = 0
 	numCols = 0
 	matrixMDP = None

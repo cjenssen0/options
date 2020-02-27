@@ -33,6 +33,7 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 	for i in range(numStates):
 		for j in range(numStates):
 			D[i][i] = np.sum(W[i])
+
 	# Making sure our final matrix will be full rank
 	for i in range(numStates):
 	   if D[i][i] == 0.0:
@@ -317,7 +318,7 @@ if __name__ == "__main__":
 	verbose = args.verbose
 	inputMDP = args.input
 	outputPath = args.output
-	outputPath = '/home/cjei/Apps/graphs/'
+	outputPath = './graphs/'
 	optionsToLoad = args.load
 	bothDirections = args.both
 	num_seeds = args.num_seeds
