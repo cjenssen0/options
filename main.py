@@ -384,7 +384,7 @@ if __name__ == "__main__":
 		std_dev = np.std(returns_eval_primitive, axis=0)
 		minConfInt, maxConfInt = Utils.computeConfInterval(average, std_dev, num_seeds)
 
-		plt.figure(figsize=(30, 30))
+		plt.figure(figsize=(20, 20))
 		plt.plot(Utils.movingAverage(average), label='Prim. act.', color=Utils.colors[color_idx])
 		plt.fill_between(range(len(Utils.movingAverage(average))),
 			Utils.movingAverage(minConfInt), Utils.movingAverage(maxConfInt),
