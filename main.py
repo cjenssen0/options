@@ -47,18 +47,29 @@ def discoverOptions(env, epsilon, verbose, discoverNegation, plotGraphs=False):
 	# Eigendecomposition
 	# IMPORTANT: The eigenvectors are in columns
 	eigenvalues, eigenvectors = np.linalg.eig(normalizedL)
+
 	# I need to sort the eigenvalues and eigenvectors
 	idx = eigenvalues.argsort()[::-1]
 	eigenvalues = eigenvalues[idx]
 	eigenvectors = eigenvectors[:,idx]
 
-	#-- calculate Information potential Ip
-	v_sum = np.dot(eigenvectors.T, np.ones_like(eigenvalues))
-	Ip = (np.sqrt(np.abs(eigenvalues))*v_sum)**2
-	idx = np.flip(np.argsort(Ip))
+    # =======================================
+	''' calculate Information potential Ip
+
+    This will not work at the moment due to the kernel matrix...
+    '''
+    # =======================================
+	# v_sum = np.dot(eigenvectors.T, np.ones_like(eigenvalues))
+	# Ip = (np.sqrt(np.abs(eigenvalues))*v_sum)**2
+	# idx = np.flip(np.argsort(Ip))
+
 	# re-calculate lambda and v based on Ip
-	eigenvalues = eigenvalues[idx]
-	eigenvectors = eigenvectors[:,idx]
+	# eigenvalues = eigenvalues[idx]
+	# eigenvectors = eigenvectors[:,idx]
+
+    # ======================
+    # KECA stuff done!
+    # ======================
 
 	# If I decide to use both directions of the eigenvector, I do it here.
 	# It is easier to just change the list eigenvector, even though it may
