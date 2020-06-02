@@ -6,7 +6,8 @@ import matplotlib.pylab as plt
 import RAMFeatures
 import DataCollection
 
-from ale_python_interface import ALEInterface
+# from ale_python_interface import ALEInterface
+from atari_py import ALEInterface
 
 np.set_printoptions(threshold=np.nan)
 
